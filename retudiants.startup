@@ -1,0 +1,3 @@
+rsync -av /shared/retudiants/ /
+ip a a 172.16.11.254/22 dev eth1
+ip link set dev eth1 up
