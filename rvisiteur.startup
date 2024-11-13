@@ -1,3 +1,4 @@
 rsync -av /shared/rvisiteur/ /
+ip a a 172.16.16.5/30 dev eth0
 ip a add 172.16.2.62/26 dev eth1
 ip link set dev eth1 up

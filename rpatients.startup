@@ -1,0 +1,4 @@
+rsync -av /shared/rpatients/ /
+ip a a 172.16.16.1/30 dev eth0
+ip a a 172.16.2.254/24 dev eth1
+ip link set dev eth1 up
