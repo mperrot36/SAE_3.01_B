@@ -1,4 +1,1 @@
 rsync -av /shared/rs/ /
-ip a a 172.16.16.25/30 dev eth0
-ip a a 172.16.3.30/28 dev eth1
-ip link set dev eth1 up

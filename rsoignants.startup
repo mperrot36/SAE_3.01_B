@@ -1,4 +1,1 @@
 rsync -av /shared/rsoignants/ /
-ip a a 172.16.16.21/30 dev eth0
-ip a a 172.16.15.254/22 dev eth1
-ip link set dev eth1 up
