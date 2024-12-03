@@ -1,0 +1,47 @@
+auto eth0
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth1
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth2
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth3
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth4
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth5
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth6
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0
+
+auto eth7
+iface eth0 inet static
+	address 0.0.0.0
+	netmask 0.0.0.0
+	gateway 0.0.0.0

@@ -1,0 +1,19 @@
+rsync -av /shared/r0/ /
+
+ip a a 172.16.16.22/30 dev eth0
+ip a a 172.16.16.18/30 dev eth1
+ip a a 172.16.16.14/30 dev eth2
+ip a a 172.16.16.10/30 dev eth3
+ip a a 172.16.16.6/30 dev eth4
+ip a a 172.16.16.2/30 dev eth5
+ip a a 172.16.16.26/30 dev eth6
+ip a a 172.16.16.30/30 dev eth7
+
+ip link set dev eth0 up
+ip link set dev eth1 up
+ip link set dev eth2 up
+ip link set dev eth3 up
+ip link set dev eth4 up
+ip link set dev eth5 up
+ip link set dev eth6 up
+ip link set dev eth7 up
