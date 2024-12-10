@@ -1,47 +1,20 @@
 auto eth0
 iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth1
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth2
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth3
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth4
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth5
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth6
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
-
-auto eth7
-iface eth0 inet static
-	address 0.0.0.0
-	netmask 0.0.0.0
-	gateway 0.0.0.0
+	address 176.16.16.22
+	netmask 255.255.255.252
+	#Rsoignants
+	post-up ip route add 172.16.12.0/22 via 172.16.16.21 dev eth0
+	#Rcompta
+	post-up ip route add 172.16.1.0/24 via 172.16.16.17 dev eth0
+	#Retudiant
+	post-up ip route add 172.16.8.0/22 via 172.16.16.13 dev eth0
+	#Renseignants
+	post-up ip route add 1172.16.4.0/22 via 172.16.16.9 dev eth0
+	#Rvisiteurs
+	post-up ip route add 172.16.3.32/26 via 172.16.16.6 dev eth0
+	#Rpatients 
+	post-up ip route add 172.16.0.0/24 via 172.16.16.2 dev eth0
+	#Rs
+	post-up ip route add 172.16.3.16/28 via 172.16.16.25 dev eth0
+	#Rdsi
+	post-up ip route add 172.16.2.0/24 via 172.16.16.29 dev eth0

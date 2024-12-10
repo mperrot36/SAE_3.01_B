@@ -1,3 +1,2 @@
 rsync -av /shared/retudiants/ /
-
-ip route add default via 172.16.16.14
+/etc/init.d/networking restart

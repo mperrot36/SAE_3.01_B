@@ -1,3 +1,2 @@
 rsync -av /shared/aux/ /
-
-ip route add default via 172.16.2.254
+/etc/init.d/networking restart

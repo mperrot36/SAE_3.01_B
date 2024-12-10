@@ -1,3 +1,2 @@
 rsync -av /shared/rcompta/ /
-
-ip route add default via 172.16.16.18
+/etc/init.d/networking restart

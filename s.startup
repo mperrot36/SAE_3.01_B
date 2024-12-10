@@ -1,3 +1,2 @@
 rsync -av /shared/s/resolv.conf /
-
-ip route add default via 172.16.3.30
+/etc/init.d/networking restart

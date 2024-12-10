@@ -1,3 +1,2 @@
 rsync -av /shared/rpatients/ /
-
-ip route add default via 172.16.16.2
+/etc/init.d/networking restart
