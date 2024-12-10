@@ -1,1 +1,3 @@
 rsync -av /shared/pcs/ /
+
+ip route add default via 172.16.15.254

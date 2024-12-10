@@ -1,1 +1,3 @@
 rsync -av /shared/pcens/ /
+
+ip route add default via 172.16.7.254

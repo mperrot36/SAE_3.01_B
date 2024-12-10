@@ -1,1 +1,3 @@
 rsync -av /shared/pcc/ /
+
+ip route add default via 172.16.1.254

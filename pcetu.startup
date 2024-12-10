@@ -1,1 +1,3 @@
 rsync -av /shared/pcetu/ /
+
+ip route add default via 172.16.11.254

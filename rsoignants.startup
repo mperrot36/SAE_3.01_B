@@ -1,1 +1,3 @@
 rsync -av /shared/rsoignants/ /
+
+ip route add default via 172.16.16.22
