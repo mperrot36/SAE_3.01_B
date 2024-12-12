@@ -6,7 +6,7 @@ iface eth0 inet static
 	post-up ip route add 172.16.1.0/24 via 172.16.16.2 dev eth0
 	#Rdsi
 	post-up ip route add 172.16.2.0/24 via 172.16.16.3 dev eth0
-	#Renseignants
+	#Recec
 	post-up ip route add 1172.16.4.0/22 via 172.16.16.4 dev eth0
 	#Retudiant
 	post-up ip route add 172.16.8.0/22 via 172.16.16.5 dev eth0
