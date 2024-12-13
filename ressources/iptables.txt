@@ -1,0 +1,66 @@
+internet via protocole DNS via machine DNS
+
+
+S listen to port TCP 1224
+BDD SFTP par 3306
+
+Rpatients / Rvisiteurs -> S, Internet
+
+Retudiants / Retudiants -> MAIL, S, Internet
+
+Rchercheur / Rec -> MAIL, S, Internet, BDD (SFTP) (anonymisÃ©)
+
+Rsoignants -> MAIL, S, Internet
+
+Rcompta -> MAIL, S, Internet
+
+DSI -> tout services, Internet, Tous Ping
+DSI X BDD
+
+RSSI -> comme DSI mais BDD en plus
+
+
+
+		Rpatients / Rvisiteurs
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	--			--				DNS	 53		ACCEPT
+	S 			--				TCP	 1224	ACCEPT
+	--			S 				TCP  1224 	ACCEPT
+OUTPUT
+	Default DROP
+
+
+		Retudiants / Retudiants
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	--			--				DNS	 53		ACCEPT
+	S 			--				TCP	 1224	ACCEPT
+	--			S 				TCP  1224 	ACCEPT
+	MAIL		--				--	 --		ACCEPT
+	--			MAIL			--	 --		ACCEPT
+OUTPUT
+	Default DROP
+
+
+		Rchercheur / Rec
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	--			--				DNS	 53		ACCEPT
+	S 			--				TCP	 1224	ACCEPT
+	--			S 				TCP  1224 	ACCEPT
+	MAIL		--				--	 --		ACCEPT
+	--			MAIL			--	 --		ACCEPT
+	BDD			--				SFTP 3306 	ACCEPT
+	--			BDD				SFTP 3306 	ACCEPT
+OUTPUT
+	Default DROP
