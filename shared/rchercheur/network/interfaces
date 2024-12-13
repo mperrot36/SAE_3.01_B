@@ -1,0 +1,10 @@
+auto eth0
+iface eth0 inet static
+	address 172.16.3.1
+	netmask 255.255.255.192
+	gateway 172.16.16.1
+NOT FUNCTIONNING
+auto eth1
+iface eth1 inet static
+	address 172.16.3.1
+	netmask 255.255.255.192
