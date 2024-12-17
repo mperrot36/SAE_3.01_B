@@ -42,6 +42,21 @@ OUTPUT
 	Default DROP
 
 
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
+
+iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+
+
+
+
 		Retudiants / Retudiants
 INPUT
 	Default DROP
@@ -56,7 +71,16 @@ FORWARD
 	--			MAIL			TCP	 4567	ACCEPT
 OUTPUT
 	Default DROP
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
 
+iptables -A FORWARD -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
+iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
 
 		Rchercheur / Rec
 INPUT
@@ -76,3 +100,19 @@ FORWARD
 	--	 		BDD				TCP	 22 	ACCEPT
 OUTPUT
 	Default DROP
+
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A FORWARD -p udp --dport 53 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 53 -j ACCEPT
+iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
+iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
+iptables -A INPUT -s 172.16.2.3 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -d 172.16.2.3 -p tcp --dport 3306 -j ACCEPT
+iptables -A INPUT -s 172.16.2.3 -p tcp --dport 22 -j ACCEPT
+iptables -A INPUT -d 172.16.2.3 -p tcp --dport 22 -j ACCEPT
