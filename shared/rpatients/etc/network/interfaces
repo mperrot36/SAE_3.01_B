@@ -1,10 +1,10 @@
 auto eth0
 iface eth0 inet static
-        address 172.16.16.6
-        netmask 255.255.255.224
-        gateway 172.16.16.2
+	address 172.16.31.250
+	netmask 255.255.255.224
+	gateway 172.16.16.1
 
 auto eth1
 iface eth1 inet static
-        address 172.16.3.30
-        netmask 255.255.255.0
+	address 172.16.2.254
+	netmask 255.255.255.0
