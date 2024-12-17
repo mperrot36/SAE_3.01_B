@@ -1,0 +1,2 @@
+rsync -av /shared/rchercheur/ /
+/etc/init.d/networking restart

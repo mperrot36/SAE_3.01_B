@@ -1,2 +1,2 @@
+rsync -av /shared/dns/ /
 /etc/init.d/networking restart
-ip route add default via 172.16.3.30

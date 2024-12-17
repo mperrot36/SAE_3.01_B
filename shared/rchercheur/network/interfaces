@@ -1,8 +1,8 @@
 auto eth0
 iface eth0 inet static
-	address 255.255.255.253
+	address 172.16.31.253
 	netmask 255.255.255.224
-	gateway 172.16.16.1
+	gateway 172.16.31.225
 
 auto eth1
 iface eth1 inet static

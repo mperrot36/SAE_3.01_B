@@ -1,2 +1,2 @@
-rsync -av /shared/rcompta/ /
+rsync -av /shared/r0/ /
 /etc/init.d/networking restart

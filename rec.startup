@@ -1,2 +1,2 @@
-rsync -av /shared/rs/ /
+rsync -av /shared/rec/ /
 /etc/init.d/networking restart
