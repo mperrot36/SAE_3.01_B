@@ -1,0 +1,78 @@
+internet via protocole DNS via machine DNS
+
+
+S listen to port TCP 1224
+BDD SFTP par 3306
+
+Rpatients / Rvisiteurs -> S, Internet
+
+Retudiants / Retudiants -> MAIL, S, Internet
+
+Rchercheur / Rec -> MAIL, S, Internet, BDD (SFTP) (anonymisé)
+
+Rsoignants -> MAIL, S, Internet
+
+Rcompta -> MAIL, S, Internet
+
+DSI -> tout services, Internet, Tous Ping
+DSI X BDD
+
+RSSI -> comme DSI mais BDD en plus
+
+
+le protocole DNS c un protocole UDP, sur le port 53
+Sur la machine S ya du https pour acceder au site publique et privé
+	https: TCP 80
+Sur S ya aussi une application de gestion, TCP 1224
+Le serveur MAIL a un serveur, on utilise le port 4567, un port non normalisé par l'ISO choisit arbitrarement
+Sur BDD-> une base de donnée, on utilise MySQL port standart TCP 3306
+	on utilise aussi SFTP: port TCP 22 (car SFTP au dessus de SSH)
+
+		Rpatients / Rvisiteurs
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	DNS			--				UDP	 53		ACCEPT 
+	--			DNS				UDP	 53		ACCEPT 
+	S 			--				TCP	 80		ACCEPT
+	--			S 				TCP  80	 	ACCEPT
+OUTPUT
+	Default DROP
+
+
+		Retudiants / Retudiants
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	DNS			--				UDP	 53		ACCEPT 
+	--			DNS				UDP	 53		ACCEPT 
+	S 			--				TCP	 80 	ACCEPT
+	--			S 				TCP  80 	ACCEPT
+	MAIL		--				TCP	 4567	ACCEPT
+	--			MAIL			TCP	 4567	ACCEPT
+OUTPUT
+	Default DROP
+
+
+		Rchercheur / Rec
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy
+	DNS			--				UDP	 53		ACCEPT 
+	--			DNS				UDP	 53		ACCEPT 
+	S 			--				TCP	 80		ACCEPT
+	--			S 				TCP  80 	ACCEPT
+	MAIL		--				TCP	 4567	ACCEPT
+	--			MAIL			TCP  4567   ACCEPT
+	BDD			--				TCP  3306 	ACCEPT
+	--			BDD				TCP  3306 	ACCEPT
+	BDD 		--				TCP	 22 	ACCEPT
+	--	 		BDD				TCP	 22 	ACCEPT
+OUTPUT
+	Default DROP
