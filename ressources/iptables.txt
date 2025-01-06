@@ -63,7 +63,7 @@ iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
 iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
 
 
-		Retudiants / Retudiants
+		Retudiants / Renseignants
 INPUT
 	Default DROP
 FORWARD
@@ -144,7 +144,7 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
 
 
 
-		Rsoignants, Rsoignants
+		Rsoignants, Rcompta
 INPUT
 	Default DROP
 FORWARD
