@@ -12,38 +12,40 @@ Rchercheur / Rec -> MAIL, S (site public + site intra), Internet, BDD (SFTP)
 
 Rsoignants / Rcompta -> MAIL, S (site public + gestion RDV), Internet
 
-DSI -> tout services, Internet, Tous Ping
-DSI X BDD
+RDSI -> tout services, Internet, Tous Ping
+RDSI X BDD
 
 RSSI -> comme DSI mais BDD en plus
 
-
-le protocole DNS c un protocole UDP, sur le port 53
+pour l'accès à internet:
+	le protocole DNS c un protocole UDP, sur le port 53
+	le protocole HTTP et HTTPS (TCP, 443)
 Sur la machine S ya du https pour acceder au site publique et privé
 	https/http: TCP 80,443 problèmes, les 2 étant sur la même machine et sur les mêmes ports, on peux pas les diff sur un iptables, ce sera fait manuellement sur les sites. On accepte simplement les sur le même ports partout. 
 Sur S ya aussi une application de gestion, TCP 1224
 Le serveur MAIL a un serveur, on utilise le port 4567, un port non normalisé par l'ISO choisit arbitrarement
-Sur BDD-> une base de donnée, on utilise MySQL port standart TCP 3306
-	on utilise aussi SFTP: port TCP 22 (car SFTP au dessus de SSH)
+Sur BDD-> une base de donnée, on utilise SFTP pour s'y connecter: port TCP 22 (car SFTP au dessus de SSH)
+	S à besoin de s'y connecter avec MySQL port standart TCP 3306
+RDSI peut ping tout le monde, mais les autres ne peuvent pas. Ping c'est ICMP.
+	Pour l'unidirection on utilise les states: NEW, ESTABLISHED et RELATED quand la source c'est RDSI,
+	ESTABLISHED et RELATED sinon
+	ya la même pour SFTP de BDD
 
 Certains réseaux utilisent les mêmes services différements (étudiants / enseignants sur l'intra), pas différenciable sur iptables mais du coup on fait sur les services en eux même (donc hors du cadre de la SAE)
-
 
 		Rpatients / Rvisiteurs
 INPUT
 	Default DROP
 FORWARD
 	Default DROP
-	source 		destination		prot port	policy
+	source 		destination		prot port	policy		state
 	DNS			--				UDP	 53		ACCEPT
 	--			DNS				UDP	 53		ACCEPT
-	S 			--				TCP	 80,443	ACCEPT
-	--			S 				TCP  80,443	ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
 OUTPUT
 	Default DROP
-
 
 
 iptables -P INPUT DROP
@@ -51,16 +53,13 @@ iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
 
 
 		Retudiants / Renseignants
@@ -68,15 +67,14 @@ INPUT
 	Default DROP
 FORWARD
 	Default DROP
-	source 		destination		prot port	policy
+	source 		destination		prot port	policy		state
 	DNS			--				UDP	 53		ACCEPT 
-	--			DNS				UDP	 53		ACCEPT 
-	S 			--				TCP	 80,443	ACCEPT
-	--			S 				TCP  80,443	ACCEPT
+	--			DNS				UDP	 53		ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
 	MAIL		--				TCP	 4567	ACCEPT
 	--			MAIL			TCP	 4567	ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
 OUTPUT
 	Default DROP
 
@@ -86,104 +84,95 @@ iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
+
 iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
 iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
+
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+
+
 
 		Rchercheur / Rec
 INPUT
 	Default DROP
 FORWARD
 	Default DROP
-	source 		destination		prot port	policy
+	source 		destination		prot port	policy		state
 	DNS			--				UDP	 53		ACCEPT 
-	--			DNS				UDP	 53		ACCEPT 
-	S 			--				TCP	 80,443	ACCEPT
-	--			S 				TCP  80,443	ACCEPT
+	--			DNS				UDP	 53		ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
 	MAIL		--				TCP	 4567	ACCEPT
 	--			MAIL			TCP  4567   ACCEPT
-	BDD			--				TCP  3306 	ACCEPT
-	--			BDD				TCP  3306 	ACCEPT
-	BDD 		--				TCP	 22 	ACCEPT
-	--	 		BDD				TCP	 22 	ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
+	BDD 		--				TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
+	--	 		BDD				TCP	 22 	ACCEPT 		NEW, ESTABLISHED, RELATED
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
 OUTPUT
 	Default DROP
-
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A INPUT -s 172.16.2.3 -p tcp --dport 3306 -j ACCEPT
-iptables -A INPUT -d 172.16.2.3 -p tcp --dport 3306 -j ACCEPT
-iptables -A INPUT -s 172.16.2.3 -p tcp --dport 22 -j ACCEPT
-iptables -A INPUT -d 172.16.2.3 -p tcp --dport 22 -j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
+iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
+iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.3 -p tcp --dport 22 --state ESTABLISHED, RELATED -j ACCEPT
+iptables -A INPUT -d 172.16.2.3 -p tcp --dport 22 -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
 
 
 
-		Rsoignants, Rcompta
+		Rsoignants, Rcompta 
 INPUT
 	Default DROP
 FORWARD
 	Default DROP
-	source 		destination		prot port	policy
+	source 		destination		prot port	policy		state
 	DNS			--				UDP	 53		ACCEPT 
 	--			DNS				UDP	 53		ACCEPT
-	S 			--				TCP	 80,443	ACCEPT
-	--			S 				TCP  80,443	ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
 	S 			-- 				TCP  1224 	ACCEPT
 	-- 			S 				TCP  1224 	ACCEPT
 	MAIL		--				TCP	 4567	ACCEPT
 	--			MAIL			TCP  4567   ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
 OUTPUT
 	Default DROP
+
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 1224 -j ACCEPT
 iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 1224 -j ACCEPT
 
-iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
+iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
+iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
 
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
 
 
 
@@ -192,46 +181,155 @@ INPUT
 	Default DROP
 FORWARD
 	Default DROP
-	source 		destination		prot port	policy
+	source 		destination		prot port	policy		state
 	DNS			--				UDP	 53		ACCEPT
 	--			DNS				UDP	 53		ACCEPT
-	S 			--				TCP	 80,443	ACCEPT
-	--			S 				TCP  80,443	ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
 	S 			-- 				TCP  1224 	ACCEPT
 	-- 			S 				TCP  1224 	ACCEPT
 	MAIL		--				TCP	 4567	ACCEPT
 	--			MAIL			TCP  4567   ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
-	BDD			RSSI			TCP  3306 	ACCEPT
-	RSSI		BDD				TCP  3306 	ACCEPT
-	BDD 		RSSI			TCP	 22 	ACCEPT
-	RSSI 		BDD				TCP	 22 	ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
+	BDD 		RSSI			TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
+	RSSI 		BDD				TCP	 22 	ACCEPT 		NEW, ESTABLISHED, RELATED
 OUTPUT
 	Default DROP
+
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 1224 -j ACCEPT
 iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 1224 -j ACCEPT
-iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
 
-iptables -A INPUT -p tcp -s 172.16.2.1 --dport 3306 -d 172.16.2.3 -j ACCEPT
-iptables -A INPUT -p tcp -s 172.16.2.1 --dport 22 -d 172.16.2.3 -j ACCEPT
+iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
+iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
 
-iptables -A INPUT -p tcp -s 172.16.2.3 --dport 3306 -d 172.16.2.1 -j ACCEPT
-iptables -A INPUT -p tcp -s 172.16.2.3 --dport 22 -d 172.16.2.1 -j ACCEPT
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -s 172.16.2.3 -d 172.16.2.1 --dport 22 -m state --state ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -s 172.16.2.1 -d 172.16.2.3 --sport 22 -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+
+
+
+
+		RS
+INPUT
+	Default DROP
+FORWARD
+	Default ACCEPT
+OUTPUT
+	Default DROP
+
+iptables -P INPUT DROP
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT DROP
+
+
+		S
+INPUT
+	Default DROP
+	source 		destination		prot port	policy		state
+	-- 			-- 				TCP  80,443 ACCEPT
+	--			-- 				TCP  1224 	ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
+	BDD 		-- 				TCP	 3306 	ACCEPT 		ESTABLISHED, RELATED
+FORWARD
+	Default DROP
+OUTPUT
+	Default DROP
+	source		destination		prot port 	policy
+	-- 			-- 				TCP  80,443 ACCEPT
+	--			-- 				TCP  1224 	ACCEPT
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
+	--  		BDD				TCP	 3306 	ACCEPT 		NEW, ESTABLISHED, RELATED
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --dport 1224 -j ACCEPT
+iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.3 -p tcp --dport 3306 -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
+iptables -A OUTPUT -p tcp --sport 1224 -j ACCEPT
+iptables -A OUTPUT -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.2.3 -p tcp --sport 3306 -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+
+		DNS
+INPUT
+	Default DROP
+	source 		destination		prot port	policy		state
+	-- 	 		-- 				UDP	 53 	ACCEPT
+	RDSI 		-- 				ICMP /		ACCEPT
+FORWARD
+	Default DROP
+OUTPUT
+	Default DROP
+	source 		destination		prot port	policy		state
+	-- 	 		-- 				UDP	 53 	ACCEPT
+	--  		RDSI			ICMP /		ACCEPT
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A INPUT -p udp --dport 53 -J ACCEPT
+iptables -A OUTPUT -p udp --sport 53 -J ACCEPT
+
+iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+
+
+		R0
+INPUT
+	Default DROP
+FORWARD
+	Default DROP
+	source 		destination		prot port	policy		state
+	eth0 		eth0			--	 -- 	ACCEPT
+	eth1 		DNS				UDP  53		ACCEPT
+	DNS  		eth1			UDP  53		ACCEPT
+	-- 			-- 				TCP  80,443 ACCEPT
+OUTPUT
+	Default DROP
+
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A FORWARD -i eth0 -o eth0 -j ACCEPT
+
+iptables -A FORWARD -i eth1 -d 172.16.3.17 -p ucp --dport 53 -j ACCEPT
+iptables -A FORWARD -o eth1 -s 172.16.3.17 -p udp --sport 53 -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --sport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -p tcp --sport 443 -j ACCEPT
+
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+
+
+jsp comment le mettre dans le tableau mais faut mettre le masquarade pour proteger d'internet
+eth1 est l'interface connecté à internet
+eth0 est celle qui relie tous les sous-réseaux ensemble (avec théoriquement un switch on suppose, ou un truc du genre)
