@@ -6,7 +6,7 @@ BDD SFTP par 3306
 
 Rpatients / Rvisiteurs -> S (site public), Internet
 
-Retudiants / Retudiants -> MAIL, S (site public + site intra), Internet
+Retudiants / Renseignants -> MAIL, S (site public + site intra), Internet
 
 Rchercheur / Rec -> MAIL, S (site public + site intra), Internet, BDD (SFTP)
 
