@@ -6,14 +6,13 @@ iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.17 -p tcp --dport 53 -j ACCEPT
 iptables -A FORWARD -s 172.16.3.17 -p udp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.17 -p tcp --dport 53 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A FORWARD -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
-iptables -A FORWARD -d 172.16.3.28 -p tcp --dport 443 -j ACCEPT
+
 iptables -A FORWARD -s 172.16.2.2 -p tcp --dport 4567 -j ACCEPT
 iptables -A FORWARD -d 172.16.2.2 -p tcp --dport 4567	-j ACCEPT
-iptables -A FORWARD -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A FORWARD -d 172.16.2.0/24 -p icmp -j ACCEPT
+
+iptables -A FORWARD -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
+iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
