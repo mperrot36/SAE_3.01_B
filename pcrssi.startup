@@ -1,0 +1,2 @@
+rsync -av /shared/pcrssi/ /
+/etc/init.d/networking restart

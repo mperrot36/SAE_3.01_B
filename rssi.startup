@@ -1,2 +1,0 @@
-rsync -av /shared/rssi/ /
-/etc/init.d/networking restart
