@@ -1,2 +1,2 @@
-rsync -av /shared/dsi/ /
+rsync -av /shared/pcdsi/ /
 /etc/init.d/networking restart
