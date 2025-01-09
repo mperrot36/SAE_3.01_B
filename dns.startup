@@ -8,5 +8,5 @@ iptables -P OUTPUT DROP
 iptables -A INPUT -p udp --dport 53 -J ACCEPT
 iptables -A OUTPUT -p udp --sport 53 -J ACCEPT
 
-iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW, ESTABLISHED, RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED, RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
