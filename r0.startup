@@ -16,3 +16,4 @@ iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -p tcp --sport 443 -j ACCEPT
 
 iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
+
