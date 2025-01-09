@@ -322,18 +322,20 @@ INPUT
 	Rsoignants	TCP  4567   ACCEPT
 	Rcompta 	TCP  4567   ACCEPT
 	RDSI 		TCP  4567   ACCEPT
+	AUX 		TCP  4567 	ACCEPT 		NEW, ESTABLISHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
 	Default DROP
 	destination		prot port	policy		state
-	Retudiants	TCP  4567   ACCEPT
-	RenseignantsTCP  4567   ACCEPT
-	Rchercheur	TCP  4567   ACCEPT
-	Rec 		TCP  4567   ACCEPT
-	Rsoignants	TCP  4567   ACCEPT
-	Rcompta 	TCP  4567   ACCEPT
-	RDSI 		TCP  4567   ACCEPT
+	Retudiants		TCP  4567   ACCEPT
+	Renseignants 	TCP  4567   ACCEPT
+	Rchercheur		TCP  4567   ACCEPT
+	Rec 			TCP  4567   ACCEPT
+	Rsoignants		TCP  4567   ACCEPT
+	Rcompta 		TCP  4567   ACCEPT
+	RDSI 			TCP  4567   ACCEPT
+	AUX 			TCP  4567 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -347,6 +349,8 @@ iptables -A INPUT -s 172.16.20.0/22 -p tcp --dport 4567 -j ACCEPT
 iptables -A INPUT -s 172.16.1.0/24 -p tcp --dport 4567 -j ACCEPT
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 4567 -j ACCEPT
 
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 4567 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+
 iptables -A OUTPUT -d 172.16.16.0/22 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.4.0/22 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.8.0/22 -p tcp --sport 4567 -j ACCEPT
@@ -354,6 +358,8 @@ iptables -A OUTPUT -d 172.16.12.0/22 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.20.0/22 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.1.0/24 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 4567 -j ACCEPT
+
+iptables -A OUTPUT -D 172.16.2.4 -p tcp --sport 4567 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 
 		BDD
@@ -363,7 +369,9 @@ INPUT
 	Rchercheur	TCP	 22 	ACCEPT 		NEW, ESTABLESHED, RELATED
 	Rec 		TCP	 22 	ACCEPT 		NEW, ESTABLESHED, RELATED
 	RSSI 	  	TCP	 22 	ACCEPT 		NEW, ESTABLESHED, RELATED
-	S 			TCP  80,443 ACCEPT
+	S 			TCP  3306	ACCEPT
+	AUX 		TCP  22 	ACCEPT 		NEW, ESTABLISHED, RELATED
+	AUX 		TCP  3306 	ACCEPT 		NEW, ESTABLISHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
@@ -372,7 +380,9 @@ OUTPUT
 	Rchercheur		TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
 	Rec 			TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
 	RSSI 	  		TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
-	S 				TCP  80,443 ACCEPT
+	S 				TCP  3306 	ACCEPT
+	AUX 			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
+	AUX 			TCP  3306 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -381,15 +391,18 @@ iptables -P OUTPUT DROP
 iptables -A INPUT -s 172.16.8.0/22 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -s 172.16.12.0/22 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -s 172.16.2.1 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -s 172.16.3.28 -p tcp --dport 3306 -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 3306 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
 iptables -A OUTPUT -d 172.16.8.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.12.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.1 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 80 -j ACCEPT
-iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 443 -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 3306 -j ACCEPT
 
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 3306 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 
 		AUX
@@ -457,6 +470,8 @@ INPUT
 	Rsoignants	TCP  1224 	ACCEPT
 	RDSI 		ICMP /		ACCEPT 		NEW, ESTABLISHED, RELATED
 	BDD 		TCP	 3306 	ACCEPT 		ESTABLISHED, RELATED
+	AUX 		TCP  1224 	ACCEPT 		NEW, ESTABLISHED, RELATED
+	AUX 		TCP  80,443	ACCEPT 		NEW, ESTABLISHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
@@ -467,6 +482,8 @@ OUTPUT
 	Rsoignants		TCP  1224 	ACCEPT
 	RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
 	BDD				TCP	 3306 	ACCEPT 		NEW, ESTABLISHED, RELATED
+	AUX 			TCP  1224 	ACCEPT 		ESTABLISHED, RELATED
+	AUX 			TCP  80,443	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -487,20 +504,28 @@ iptables -A OUTPUT -s 172.16.2.3 -p tcp --sport 3306 -m state --state NEW,ESTABL
 iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 1224 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 80 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 443 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 443 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 		DNS
 INPUT
 	Default DROP
-	source 		destination		prot port	policy		state
-	-- 	 		-- 				UDP	 53 	ACCEPT
-	RDSI 		-- 				ICMP /		ACCEPT
+	source 		prot port	policy		state
+	-- 	 		UDP	 53 	ACCEPT
+	RDSI 		ICMP /		ACCEPT
+	AUX 		UDP  53 	ACCEPT 	 	NEW, ESTABLISHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
 	Default DROP
-	source 		destination		prot port	policy		state
-	-- 	 		-- 				UDP	 53 	ACCEPT
-	--  		RDSI			ICMP /		ACCEPT
+	destination		prot port	policy		state
+	-- 				UDP	 53 	ACCEPT
+	RDSI			ICMP /		ACCEPT
+	AUX				UDP  53 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -512,6 +537,8 @@ iptables -A OUTPUT -p udp --sport 53 -J ACCEPT
 iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+iptables -A INPUT -s 172.16.2.4 -p udp --dport 53 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p udp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 
 		R0
