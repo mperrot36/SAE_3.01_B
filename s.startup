@@ -1,4 +1,4 @@
-rsync -av /shared/s/resolv.conf /
+rsync -av /shared/s/ /
 /etc/init.d/networking restart
 
 iptables -P INPUT DROP

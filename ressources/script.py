@@ -13,15 +13,20 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit pas fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["pcetu"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
+                print("nc -ltnvp 80 -> sur la machine s")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
+                print("nc -ltnvp 443 -> sur la machine s")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit fonctionner")
                 print("nc -ltnvp 22 -> sur la machine bdd")
-                print('echo "test" | nc ' + data["bdd"] + " 22 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["bdd"] + " 22 -> doit fonctionner")
             except KeyError as _:
                 print("mail ou bdd ou s ne sont pas rentrer correctement: KeyError")
         case "bdd":
@@ -32,18 +37,22 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit pas fonctionner")
                 print("nc -ltnvp 22 -> sur la machine aux")
-                print('echo "test" | nc ' + data["aux"] + " 22 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["aux"] + " 22 -> doit pas fonctionner")
                 print("nc -ltnvp 22 -> sur la machine pcrssi")
                 print(
-                    'echo "test" | nc ' + data["pcrssi"] + " 22 -> doit pas fonctionner"
+                    'echo "test" | nc ' +
+                    data["pcrssi"] + " 22 -> doit pas fonctionner"
                 )
                 print("nc -ltnvp 22 -> sur la machine pcche")
                 print(
-                    'echo "test" | nc ' + data["pcche"] + " 22 -> doit pas fonctionner"
+                    'echo "test" | nc ' +
+                    data["pcche"] + " 22 -> doit pas fonctionner"
                 )
                 print("nc -ltnvp 22 -> sur la machine pcec")
                 print(
-                    'echo "test" | nc ' + data["pcec"] + " 22 -> doit pas fonctionner"
+                    'echo "test" | nc ' +
+                    data["pcec"] + " 22 -> doit pas fonctionner"
                 )
             except KeyError as _:
                 print(
@@ -67,27 +76,36 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit pas fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcetu")
-                print('echo "test" | nc ' + data["pcetu"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcetu"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcs")
-                print('echo "test" | nc ' + data["pcs"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcs"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcens")
-                print('echo "test" | nc ' + data["pcens"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcens"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcc")
-                print('echo "test" | nc ' + data["pcc"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcc"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 4567 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 4567 -> doit pas fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcp")
                 print(
-                    'echo "test" | nc ' + data["pcp"] + " 4567 -> doit pas fonctionner"
+                    'echo "test" | nc ' + data["pcp"] +
+                    " 4567 -> doit pas fonctionner"
                 )
                 print("nc -ltnvp 4567 -> sur la machine pcv")
                 print(
-                    'echo "test" | nc ' + data["pcv"] + " 4567 -> doit pas fonctionner"
+                    'echo "test" | nc ' + data["pcv"] +
+                    " 4567 -> doit pas fonctionner"
                 )
                 print("nc -ltnvp 4567 -> sur la machine pcec")
-                print('echo "test" | nc ' + data["pcec"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcec"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine pcche")
-                print('echo "test" | nc ' + data["pcche"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["pcche"] + " 4567 -> doit fonctionner")
             except KeyError as _:
                 print(
                     "pcetu ou pcs ou pcens ou pcc ou s ou pcp ou pcv ou pcec ou pcche ne sont pas rentrer correctement: KeyError"
@@ -100,13 +118,17 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit fonctionner")
             except KeyError as _:
                 print("mail ou s ne sont pas rentrer correctement: KeyError")
         case "pcche":
@@ -117,15 +139,20 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit pas fonctionner")
                 print("nc -ltnvp 22 -> sur la machine bdd")
-                print('echo "test" | nc ' + data["bdd"] + " 22 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["bdd"] + " 22 -> doit fonctionner")
             except KeyError() as _:
                 print("mail ou s ou bdd ne sont pas rentrer correctement: KeyError")
         case "pcdsi":
@@ -136,15 +163,20 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit fonctionner")
                 print("nc -ltnvp 22 -> sur la machine bdd")
-                print('echo "test" | nc ' + data["bdd"] + " 22 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["bdd"] + " 22 -> doit pas fonctionner")
             except KeyError() as _:
                 print("mail ou s ou bdd ne sont pas rentrer correctement: KeyError")
         case "pcec":
@@ -155,17 +187,23 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit pas fonctionner")
                 print("nc -ltnvp 22 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 22 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 22 -> doit fonctionner")
                 print("nc -ltnvp 3306 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 3306 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 3306 -> doit fonctionner")
             except KeyError() as _:
                 print("mail ou s ou bdd ne sont pas rentrer correctement: KeyError")
         case "pcetu":
@@ -176,13 +214,17 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit pas fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit pas fonctionner")
             except KeyError() as _:
                 print("mail ou s ne sont pas rentrer correctement: KeyError")
         case "pcp":
@@ -193,9 +235,11 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
             except KeyError() as _:
                 print("s n'est pas rentrer correctement: KeyError")
         case "pcrssi":
@@ -206,15 +250,20 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit fonctionner")
                 print("nc -ltnvp 22 -> sur la machine bdd")
-                print('echo "test" | nc ' + data["bdd"] + " 22 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["bdd"] + " 22 -> doit fonctionner")
             except KeyError() as _:
                 print("mail ou s ou bdd ne sont pas rentrer correctement: KeyError")
         case "pcs":
@@ -225,13 +274,17 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine mail")
-                print('echo "test" | nc ' + data["mail"] + " 4567 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["mail"] + " 4567 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
                 print("nc -ltnvp 1224 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 1224 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 1224 -> doit fonctionner")
             except KeyError as _:
                 print("mail ou s ne sont pas rentrer correctement: KeyError")
         case "pcv":
@@ -242,9 +295,11 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 80 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 80 -> doit fonctionner")
                 print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' + data["s"] + " 443 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 443 -> doit fonctionner")
             except KeyError() as _:
                 print("s n'est pas rentrer correctement: KeyError")
         case "s":
@@ -255,6 +310,7 @@ for attribute, _ in data.items():
             try:
                 print("lynx google.fr -> doit fonctionner")
                 print("nc -ltnvp 3306 -> sur la machine bdd")
-                print('echo "test" | nc ' + data["s"] + " 3306 -> doit fonctionner")
+                print('echo "test" | nc ' +
+                      data["s"] + " 3306 -> doit fonctionner")
             except KeyError() as _:
                 print("bdd n'est pas rentrer correctement: KeyError")
