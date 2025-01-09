@@ -19,3 +19,10 @@ iptables -A OUTPUT -s 172.16.2.3 -p tcp --sport 3306 -m state --state NEW,ESTABL
 
 iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 1224 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 80 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 80 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 443 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 443 -m state --state ESTABLISHED,RELATED -j ACCEPT
