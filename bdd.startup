@@ -10,14 +10,14 @@ iptables -A INPUT -s 172.16.12.0/22 -p tcp --dport 22 -m state --state NEW,ESTAB
 iptables -A INPUT -s 172.16.2.1 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -s 172.16.3.28 -p tcp --dport 3306 -j ACCEPT
 
-iptables -A INPUT -s 172.16.2.4 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -s 172.16.2.4 -p tcp --dport 3306 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
 iptables -A OUTPUT -d 172.16.8.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.12.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.1 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 3306 -j ACCEPT
 
-iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 3306 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
