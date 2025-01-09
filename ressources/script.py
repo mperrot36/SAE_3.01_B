@@ -12,21 +12,21 @@ for attribute, _ in data.items():
             )
             try:
                 print("lynx google.fr -> doit pas fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine mail")
+                print("nc -ltnvp 2302 -> sur la machine mail")
                 print('echo "test" | nc ' +
-                      data["mail"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 80 -> sur la machine s")
+                      data["mail"] + " 2302 -> doit fonctionner")
+                print("nc -ltnvp 2302 -> sur la machine s")
                 print('echo "test" | nc ' +
-                      data["s"] + " 80 -> doit fonctionner")
-                print("nc -ltnvp 443 -> sur la machine s")
+                      data["s"] + " 2302 -> doit fonctionner")
+                print("nc -ltnvp 2302 -> sur la machine s")
                 print('echo "test" | nc ' +
-                      data["s"] + " 443 -> doit fonctionner")
-                print("nc -ltnvp 1224 -> sur la machine s")
+                      data["s"] + " 2302 -> doit fonctionner")
+                print("nc -ltnvp 2302 -> sur la machine s")
                 print('echo "test" | nc ' +
-                      data["s"] + " 1224 -> doit fonctionner")
-                print("nc -ltnvp 22 -> sur la machine bdd")
+                      data["s"] + " 2302 -> doit fonctionner")
+                print("nc -ltnvp 2302 -> sur la machine bdd")
                 print('echo "test" | nc ' +
-                      data["bdd"] + " 22 -> doit fonctionner")
+                      data["bdd"] + " 2302 -> doit fonctionner")
             except KeyError as _:
                 print("mail ou bdd ou s ne sont pas rentrer correctement: KeyError")
         case "bdd":
