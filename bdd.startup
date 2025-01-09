@@ -1,2 +1,18 @@
 rsync -av /shared/bdd/ /
 /etc/init.d/networking restart
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A INPUT -s 172.16.8.0/22 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.12.0/22 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.1 -p tcp --dport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.3.28 -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -s 172.16.3.28 -p tcp --dport 443 -j ACCEPT
+
+iptables -A OUTPUT -d 172.16.8.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.12.0/22 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.1 -p tcp --sport 22 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 80 -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 443 -j ACCEPT
