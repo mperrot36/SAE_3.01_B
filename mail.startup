@@ -23,4 +23,4 @@ iptables -A OUTPUT -d 172.16.20.0/22 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.1.0/24 -p tcp --sport 4567 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 4567 -j ACCEPT
 
-iptables -A OUTPUT -D 172.16.2.4 -p tcp --sport 4567 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 4567 -m state --state ESTABLISHED,RELATED -j ACCEPT
