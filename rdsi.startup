@@ -1,6 +1,6 @@
 rsync -av /shared/rdsi/ /
 /etc/init.d/networking restart
 
-iptables -P INPUT DROP
+iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
-iptables -P OUTPUT DROP
+iptables -P OUTPUT ACCEPT

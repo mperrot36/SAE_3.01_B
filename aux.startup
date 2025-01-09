@@ -6,16 +6,13 @@ iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
 iptables -A INPUT -s 172.16.2.2 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.2.2 -p tcp --dport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.2 -p tcp --dport 2302 -j ACCEPT
 
-iptables -A INPUT -s 172.16.2.3 -p tcp --dport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.2.3 -p tcp --sport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.3 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.3 -p tcp --dport 2302 -j ACCEPT
 
-iptables -A INPUT -s 172.16.3.28 -p tcp --dport 2302  -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.3.28 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.28 -p tcp --dport 2302 -j ACCEPT
 
-iptables -A INPUT -s 172.16.3.28 -p tcp --dport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.3.28 -p tcp --sport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-
-iptables -A INPUT -s 172.16.3.17 -p tcp --dport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.3.17 -p tcp --sport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.3.17 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.17 -p tcp --dport 2302 -j ACCEPT

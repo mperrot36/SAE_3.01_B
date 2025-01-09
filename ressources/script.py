@@ -5,69 +5,61 @@ with open("machines.json", "r") as file:
 
 for attribute, _ in data.items():
     match attribute:
-        case "aux":
-            print("AUX - RDSI")
-            print(
-                "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
-            )
-            try:
-                print("lynx google.fr -> doit pas fonctionner")
-                print("nc -ltnvp 2302 -> sur la machine mail")
-                print('echo "test" | nc ' +
-                      data["mail"] + " 2302 -> doit fonctionner")
-                print("nc -ltnvp 2302 -> sur la machine s")
-                print('echo "test" | nc ' +
-                      data["s"] + " 2302 -> doit fonctionner")
-                print("nc -ltnvp 2302 -> sur la machine s")
-                print('echo "test" | nc ' +
-                      data["s"] + " 2302 -> doit fonctionner")
-                print("nc -ltnvp 2302 -> sur la machine s")
-                print('echo "test" | nc ' +
-                      data["s"] + " 2302 -> doit fonctionner")
-                print("nc -ltnvp 2302 -> sur la machine bdd")
-                print('echo "test" | nc ' +
-                      data["bdd"] + " 2302 -> doit fonctionner")
-            except KeyError as _:
-                print("mail ou bdd ou s ne sont pas rentrer correctement: KeyError")
-        case "bdd":
-            print("\nBDD - RDSI")
-            print(
-                "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
-            )
-            try:
-                print("lynx google.fr -> doit pas fonctionner")
-                print("nc -ltnvp 22 -> sur la machine aux")
-                print('echo "test" | nc ' +
-                      data["aux"] + " 22 -> doit pas fonctionner")
-                print("nc -ltnvp 22 -> sur la machine pcrssi")
-                print(
-                    'echo "test" | nc ' +
-                    data["pcrssi"] + " 22 -> doit pas fonctionner"
-                )
-                print("nc -ltnvp 22 -> sur la machine pcche")
-                print(
-                    'echo "test" | nc ' +
-                    data["pcche"] + " 22 -> doit pas fonctionner"
-                )
-                print("nc -ltnvp 22 -> sur la machine pcec")
-                print(
-                    'echo "test" | nc ' +
-                    data["pcec"] + " 22 -> doit pas fonctionner"
-                )
-            except KeyError as _:
-                print(
-                    "pcrssi ou pcche ou pcec ou aux ne sont pas rentrer correctement: KeyError"
-                )
-        case "dns":
-            print("\nDNS - RDSI")
-            print(
-                "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
-            )
-            try:
-                print("lynx google.fr -> doit pas fonctionner")
-                print("ping " + data["pcrssi"] + " -> doit pas fonctionner")
-            except KeyError as _:
-                print("pcrssi ne sont pas rentrer correctement: KeyError")
+        # case "aux":
+        #     print("AUX - RDSI")
+        #     print(
+        #         "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
+        #     )
+        #     try:
+        #         print("lynx google.fr -> doit pas fonctionner")
+        #         print("nc -ltnvp 2302 -> sur la machine mail")
+        #         print('echo "test" | nc ' +
+        #               data["mail"] + " 2302 -> doit fonctionner")
+        #         print("nc -ltnvp 2302 -> sur la machine s")
+        #         print("nc -ltnvp 2302 -> sur la machine bdd")
+        #         print('echo "test" | nc ' +
+        #               data["bdd"] + " 2302 -> doit fonctionner")
+        #     except KeyError as _:
+        #         print("mail ou bdd ou s ne sont pas rentrer correctement: KeyError")
+        # case "bdd":
+        #     print("\nBDD - RDSI")
+        #     print(
+        #         "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
+        #     )
+        #     try:
+        #         print("lynx google.fr -> doit pas fonctionner")
+        #         print("nc -ltnvp 22 -> sur la machine aux")
+        #         print('echo "test" | nc ' +
+        #               data["aux"] + " 22 -> doit pas fonctionner")
+        #         print("nc -ltnvp 22 -> sur la machine pcrssi")
+        #         print(
+        #             'echo "test" | nc ' +
+        #             data["pcrssi"] + " 22 -> doit pas fonctionner"
+        #         )
+        #         print("nc -ltnvp 22 -> sur la machine pcche")
+        #         print(
+        #             'echo "test" | nc ' +
+        #             data["pcche"] + " 22 -> doit pas fonctionner"
+        #         )
+        #         print("nc -ltnvp 22 -> sur la machine pcec")
+        #         print(
+        #             'echo "test" | nc ' +
+        #             data["pcec"] + " 22 -> doit pas fonctionner"
+        #         )
+        #     except KeyError as _:
+        #         print(
+        #             "pcrssi ou pcche ou pcec ou aux ne sont pas rentrer correctement: KeyError"
+        #         )
+        # case "dns":
+        #     print("\nDNS - RDSI")
+        #     print(
+        #         "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
+        #     )
+        #     try:
+        #         print("lynx google.fr -> doit pas fonctionner")
+        #         print("ping " + data["pcrssi"] + " -> doit pas fonctionner")
+        #     except KeyError as _:
+        #         print("pcrssi ne sont pas rentrer correctement: KeyError")
         case "mail":
             print("\nMAIL - RDSI")
             print(
@@ -75,40 +67,36 @@ for attribute, _ in data.items():
             )
             try:
                 print("lynx google.fr -> doit pas fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcetu")
+                print("nc -ltnvp 4567")
+                # print('echo "test" | nc ' +
+                #       data["mail"] + " 4567 -> sur la machine pcetu, doit fontctionner")
+                # print('echo "test" | nc ' +
+                #       data["mail"] + " 4567 -> sur la machine pcs, doit fonctionner")
                 print('echo "test" | nc ' +
-                      data["pcetu"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcs")
+                      data["mail"] + " 4567 -> sur la machine pcens, doit fonctionner")
+                # print('echo "test" | nc ' +
+                #       data["mail"] + " 4567 -> sur la machine pcc, doit fonctionner")
+                # print('echo "test" | nc ' +
+                #       data["mail"] + " 4567 -> sur la machine s, doit pas fonctionner")
+                # print(
+                #     'echo "test" | nc ' + data["mail"] +
+                #     " 4567 -> sur la machine pcp, doit pas fonctionner"
+                # )
+                # print(
+                #     'echo "test" | nc ' + data["mail"] +
+                #     " 4567 -> sur la machine pcv, doit pas fonctionner"
+                # )
                 print('echo "test" | nc ' +
-                      data["pcs"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcens")
+                      data["mail"] + " 4567 -> sur la machine pcec, doit fonctionner")
                 print('echo "test" | nc ' +
-                      data["pcens"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcc")
+                      data["mail"] + " 4567 -> sur la machine pcche, doit fonctionner")
                 print('echo "test" | nc ' +
-                      data["pcc"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine s")
-                print('echo "test" | nc ' +
-                      data["s"] + " 4567 -> doit pas fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcp")
-                print(
-                    'echo "test" | nc ' + data["pcp"] +
-                    " 4567 -> doit pas fonctionner"
-                )
-                print("nc -ltnvp 4567 -> sur la machine pcv")
-                print(
-                    'echo "test" | nc ' + data["pcv"] +
-                    " 4567 -> doit pas fonctionner"
-                )
-                print("nc -ltnvp 4567 -> sur la machine pcec")
-                print('echo "test" | nc ' +
-                      data["pcec"] + " 4567 -> doit fonctionner")
-                print("nc -ltnvp 4567 -> sur la machine pcche")
-                print('echo "test" | nc ' +
-                      data["pcche"] + " 4567 -> doit fonctionner")
+                      data["mail"] + " 4567 -> sur la machine pcdsi, doit fonctionner")
+                # print('echo "test" | nc ' +
+                #       data["mail"] + " 4567 -> sur la machine pcrssi, doit fonctionner")
             except KeyError as _:
                 print(
-                    "pcetu ou pcs ou pcens ou pcc ou s ou pcp ou pcv ou pcec ou pcche ne sont pas rentrer correctement: KeyError"
+                    "huh: KeyError"
                 )
         case "pcc":
             print("\nPCC - RCOMPTA")

@@ -7,18 +7,19 @@ iptables -P OUTPUT DROP
 
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-iptables -A INPUT -p tcp --dport 1224 -j ACCEPT
-iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-iptables -A INPUT -s 172.16.2.3 -p tcp --dport 3306 -m state --state ESTABLISHED,RELATED -j ACCEPT
-
 iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
 iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 1224 -j ACCEPT
-iptables -A OUTPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -s 172.16.2.3 -p tcp --sport 3306 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
 
-iptables -A INPUT -s 172.16.2.0/24 -p icmp -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.1.0/24 -p tcp --dport 1224 -j ACCEPT
+iptables -A INPUT -s 172.16.20.0/22 -p tcp --dport 1224 -j ACCEPT
+iptables -A OUTPUT -d 172.16.1.0/24 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.20.0/22 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.0/24 -p icmp -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 
-iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -m state --state NEW,ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -s 172.16.2.3 -p tcp --sport 3306 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.3 -p tcp --dport 3306 -j ACCEPT
+
+iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
