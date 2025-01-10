@@ -193,10 +193,10 @@ for attribute, _ in data.items():
             except KeyError() as _:
                 print("mail ou s ou bdd ne sont pas rentrer correctement: KeyError")
         case "pcec":
-            print("\nPCEC - REC")
-            print(
-                "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
-            )
+            # print("\nPCEC - REC")
+            # print(
+            #     "TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y"
+            # )
             try:
                 # print("lynx google.fr -> doit fonctionner")
                 # print("nc -ltnvp 4567 -> sur la machine mail")
@@ -211,9 +211,9 @@ for attribute, _ in data.items():
                 # print("nc -ltnvp 1224 -> sur la machine s")
                 # print('echo "test" | nc ' +
                 #       data["s"] + " 1224 -> doit pas fonctionner")
-                print("nc -ltnvp 22 -> sur la machine bdd ")
-                print('echo "test" | nc ' +
-                      data["s"] + " 22 -> doit fonctionner PAS PASSER")
+                # print("nc -ltnvp 22 -> sur la machine bdd ")
+                # print('echo "test" | nc ' +
+                #       data["bdd"] + " 22 -> doit fonctionner PAS PASSER")
                 # print("nc -ltnvp 3306 -> sur la machine bdd")
                 # print('echo "test" | nc ' +
                 #       data["bdd"] + " 3306 -> doit pas fonctionner")
@@ -328,8 +328,9 @@ for attribute, _ in data.items():
             )
             try:
                 # print("lynx google.fr -> doit fonctionner")
-                print("nc -ltnvp 3306 -> sur la machine bdd")
-                print('echo "test" | nc ' +
-                      data["s"] + " 3306 -> doit fonctionner")
+                # print("nc -ltnvp 3306 -> sur la machine bdd")
+                # print('echo "test" | nc ' +
+                #       data["bdd"] + " 3306 -> doit fonctionner")
+                pass
             except KeyError() as _:
                 print("bdd n'est pas rentrer correctement: KeyError")
