@@ -1,0 +1,2 @@
+rsync -av /shared/pcche/ /
+/etc/init.d/networking restart

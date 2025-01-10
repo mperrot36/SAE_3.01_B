@@ -3,24 +3,6 @@ iface eth0 inet static
 	address 172.16.31.253
 	netmask 255.255.255.224
 	gateway 172.16.31.225
-	#RPatient
-	up ip route add 172.16.0.0/24 via 172.16.31.250 dev eth0
-	#Rcompta
-	up ip route add 172.16.1.0/24 via 172.16.31.246 dev eth0
-	#Rdsi
-	up ip route add 172.16.2.0/24 via 172.16.31.248 dev eth0
-	#Rsoignant
-	up ip route add 172.16.20.0/22 via 172.16.31.245 dev eth0
-	#Retudiant
-	up ip route add 172.16.16.0/22 via 172.16.31.247 dev eth0
-	#Rs
-	up ip route add 172.16.3.16/28 via 172.16.31.249 dev eth0
-	#Rvisiteurs
-	up ip route add 172.16.3.32/26 via 172.16.31.251 dev eth0
-	#Renseignants
-	up ip route add 172.16.4.0/22 via 172.16.31.254 dev eth0
-	#Rec
-	up ip route add 172.16.12.0/22 via 172.16.31.252 dev eth0
 
 auto eth1
 iface eth1 inet static

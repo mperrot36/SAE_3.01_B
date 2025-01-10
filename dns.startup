@@ -9,7 +9,7 @@ iptables -A INPUT -p udp --dport 53 -j ACCEPT
 iptables -A OUTPUT -p udp --sport 53 -j ACCEPT
 
 iptables -A INPUT -s 172.16.2.0/24 -p icmp -j ACCEPT
-iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT

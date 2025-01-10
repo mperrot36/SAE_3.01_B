@@ -12,8 +12,13 @@ iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
 
 iptables -A INPUT -s 172.16.1.0/24 -p tcp --dport 1224 -j ACCEPT
 iptables -A INPUT -s 172.16.20.0/22 -p tcp --dport 1224 -j ACCEPT
+iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 1224 -j ACCEPT
 iptables -A OUTPUT -d 172.16.1.0/24 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.20.0/22 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A INPUT -s 172.16.3.17 -p udp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.3.17 -p udp --dport 53 -j ACCEPT
 
 iptables -A INPUT -s 172.16.2.0/24 -p icmp -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT

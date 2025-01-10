@@ -15,7 +15,7 @@ iface eth0 inet static
 	#Rs
 	up ip route add 172.16.3.16/28 via 172.16.31.249 dev eth0
 	#Rvisiteurs
-	up ip route add 172.16.3.32/26 via 172.16.31.251 dev eth0
+	up ip route add 172.16.24.0/26 via 172.16.31.251 dev eth0
 	#Renseignants
 	up ip route add 172.16.4.0/22 via 172.16.31.254 dev eth0
 	#Rchercheur

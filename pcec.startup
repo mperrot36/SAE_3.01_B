@@ -1,0 +1,2 @@
+rsync -av /shared/pcec/ /
+/etc/init.d/networking restart

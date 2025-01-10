@@ -4,10 +4,10 @@ rsync -av /shared/pcrssi/ /
 iptables -A INPUT -s 172.16.3.17 -p udp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.3.17 -p udp --dport 53 -j ACCEPT
 
-iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
-iptables -A OUTPUT -p tcp --sport 443 -j ACCEPT
+iptables -A INPUT -p tcp --sport 80 -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -j ACCEPT
 
 iptables -A INPUT -s 172.16.3.28 -p tcp --sport 1224 -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.3.28 -p tcp --dport 1224 -j ACCEPT

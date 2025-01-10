@@ -1,0 +1,49 @@
+Every 0.1s: python3 script.py                                                                                                                                        Nissya-Arch: 01:57:31 PM
+                                                                                                                                                                                in 0.026s (0)
+                                                                                                                                                                                             
+PCEC - REC                                                                                                                                                                                   
+TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y                                                                                
+nc -ltnvp 22 -> sur la machine s                                                                                                                                                             
+echo "test" | nc 172.16.3.28 22 -> doit fonctionner                                                                                                                                          
+nc -ltnvp 3306 -> sur la machine s                                                                                                                                                           
+echo "test" | nc 172.16.3.28 3306 -> doit fonctionner                                                                                                                                        
+                                                                                                                                                                                             
+PCETU - RETUDIANTS                                                                                                                                                                           
+TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y                                                                                
+nc -ltnvp 4567 -> sur la machine mail                                                                                                                                                        
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner                                                                                                                                         
+nc -ltnvp 80 -> sur la machine s                                                                                                                                                             
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner                                                                                                                                          
+nc -ltnvp 443 -> sur la machine s                                                                                                                                                            
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner                                                                                                                                         
+nc -ltnvp 1224 -> sur la machine s                                                                                                                                                           
+echo "test" | nc 172.16.3.28 1224 -> doit pas fonctionner                                                                                                                                    
+                                                                                                                                                                                             
+PCP - RPATIENTS                                                                                                                                                                              
+TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y                                                                                
+nc -ltnvp 80 -> sur la machine s                                                                                                                                                             
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner                                                                                                                                          
+nc -ltnvp 443 -> sur la machine s                                                                                                                                                            
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner                                                                                                                                         
+                                                                                                                                                                                             
+PCDRSSI - RDSI                                                                                                                                                                               
+TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y                                                                                
+nc -ltnvp 4567 -> sur la machine mail                                                                                                                                                        
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner                                                                                                                                         
+nc -ltnvp 80 -> sur la machine s                                                                                                                                                             
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner                                                                                                                                          
+nc -ltnvp 443 -> sur la machine s                                                                                                                                                            
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner                                                                                                                                         
+nc -ltnvp 1224 -> sur la machine s                                                                                                                                                           
+echo "test" | nc 172.16.3.28 1224 -> doit fonctionner                                                                                                                                        
+nc -ltnvp 22 -> sur la machine bdd                                                                                                                                                           
+echo "test" | nc 172.16.2.3 22 -> doit fonctionner                                                                                                                                           
+                                                                                                                                                                                             
+PCS - RSOIGNANTS                                                                                                                                                                             
+TU A BESOIN D'AVOIR LYNX D'INSTALLER LYNX SUR LA MACHINE AVEC LA COMMANDE : apt update && apt install lynx -y                                                                                
+nc -ltnvp 4567 -> sur la machine mail                                                                                                                                                        
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner                                                                                                                                         
+nc -ltnvp 80 -> sur la machine s                                                                                                                                                             
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner                                                                                                                                          
+nc -ltnvp 443 -> sur la machine s                                                                                                                                                            
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner                                                                                                                                         
