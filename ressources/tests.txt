@@ -1,0 +1,152 @@
+FORMAT DES TESTS
+<NOM DE LA MACHINE> - <NOM DU RESEAU DE LA MACHINE>
+<COMMAND> [-> doit pas fonctionner / doit pas fonctionner] [si plus de 1 commande pour test [-> sur <NOM DE LA MACHINE>]]
+
+AUX - RDSI
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit pas fonctionner
+nc -ltnvp 2302 -> sur la machine mail
+echo "test" | nc 172.16.2.2 2302 -> doit fonctionner
+nc -ltnvp 2302 -> sur la machine s
+echo "test" | nc 172.16.3.28 2302 -> doit fonctionner
+nc -ltnvp 2302 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 2302 -> doit fonctionner
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine aux
+echo "test" | nc 172.16.2.4 22 -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine pcrssi
+echo "test" | nc 172.16.2.1 22 -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine pcche
+echo "test" | nc 172.16.8.1 22 -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine pcec
+echo "test" | nc 172.16.12.1 22 -> doit pas fonctionner
+nc -ltnvp 22
+echo "test" | nc 172.16.2.3 22 -> sur pcrssi, doit fonctionner
+nc -ltnvp 22
+echo "test" | nc 172.16.2.3 22 -> sur pcche, doit fonctionner
+nc -ltnvp 22
+echo "test" | nc 172.16.2.3 22 -> sur pcec, doit fonctionner
+
+DNS - RDSI
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit pas fonctionner
+ping 172.16.2.1 -> doit pas fonctionner
+
+MAIL - RDSI
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit pas fonctionner
+nc -ltnvp 4567
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcetu, doit fontctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcs, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcens, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcc, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine s, doit pas fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcp, doit pas fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcv, doit pas fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcec, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcche, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcdsi, doit fonctionner
+echo "test" | nc 172.16.2.2 4567 -> sur la machine pcrssi, doit fonctionner
+
+PCC - RCOMPTA
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+
+PCCHE - RCHERCHEUR
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 22 -> doit fonctionner
+
+PCDSI - RDSI
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+nc -ltnvp 22 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 22 -> doit pas fonctionner
+
+PCEC - REC
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit pas fonctionner
+nc -ltnvp 22 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 22 -> doit fonctionner PAS PASSER
+nc -ltnvp 3306 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 3306 -> doit pas fonctionner
+
+PCETU - RETUDIANTS
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit pas fonctionner
+
+PCP - RPATIENTS
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+
+PCDRSSI - RDSI
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+nc -ltnvp 22 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 22 -> doit fonctionner
+
+PCS - RSOIGNANTS
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 4567 -> sur la machine mail
+echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+nc -ltnvp 1224 -> sur la machine s
+echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+
+PCV - RVISITEURS
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 80 -> sur la machine s
+echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+nc -ltnvp 443 -> sur la machine s
+echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+
+S - RS
+echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+nc -ltnvp 3306 -> sur la machine bdd
+echo "test" | nc 172.16.2.3 3306 -> doit fonctionner
