@@ -1,0 +1,2 @@
+rsync -av /shared/rbas/ /
+/etc/init.d/networking restart

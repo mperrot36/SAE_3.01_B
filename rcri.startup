@@ -1,0 +1,15 @@
+rsync -av /shared/rcri/ /
+/etc/init.d/networking restart
+
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT DROP
+
+iptables -A FORWARD -p tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --sport 80 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 443 -j ACCEPT
+iptables -A FORWARD -p tcp --sport 443 -j ACCEPT
+
+iptables -A FORWARD -i eth0 -o eth0 -j ACCEPT
+
+iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
