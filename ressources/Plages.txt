@@ -54,6 +54,16 @@ Plage Routeurs : 172.16.31.224/27 -> 172.16.31.254
 
 
 New routeurs:
-	Rlow 172.16.31.225
-	Rmid 172.16.31.226
-	Rhigh 172.16.31.2257
+	Rbas 172.16.31.225:
+		Rpatients
+		Rvisiteurs
+		Rcompta
+		Rsoignants
+	Redu 172.16.31.226:
+		Retudiants
+		Renseignants
+		Rchercheurs
+		Rec
+	Rcri 172.16.31.227:
+		Rs
+		Rdsi
