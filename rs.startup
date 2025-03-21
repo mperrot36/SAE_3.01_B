@@ -4,3 +4,6 @@ rsync -av /shared/rs/ /
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT DROP
+
+iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
+iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
