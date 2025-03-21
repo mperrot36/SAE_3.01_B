@@ -150,3 +150,41 @@ S - RS
 echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
 nc -ltnvp 3306 -> sur la machine bdd
 echo "test" | nc 172.16.2.3 3306 -> doit fonctionner
+
+
+
+-----
+
+TESTS AUTOMATIQUE - S4
+machines à tester:
+	pcs
+		accès internet:
+			echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+		accès à mail:
+			echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+		accès à l'intranet (http):
+			echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+		accès à l'intranet (https):
+			echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+		accès à appli gestion sur s:
+			echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+
+	pcdsi
+		accès internet:
+			echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+		accès à mail
+			echo "test" | nc 172.16.2.2 4567 -> doit fonctionner
+		accès intranet (http):
+			echo "test" | nc 172.16.3.28 80 -> doit fonctionner
+		accès intranet (https):
+			echo "test" | nc 172.16.3.28 443 -> doit fonctionner
+		accès à appli gestion sur s:
+			echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+		accès à bdd (en SFTP):
+			echo "test" | nc 172.16.2.3 22 -> doit pas fonctionner
+
+	s
+		accès internet:
+			echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
+		accès à bdd (en MySql):
+			echo "test" | nc 172.16.2.3 3306 -> doit fonctionner
