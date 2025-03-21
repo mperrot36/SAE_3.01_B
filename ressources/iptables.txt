@@ -26,6 +26,13 @@ S (site) <- Tout le monde enfaite
 S (gestion) <- Rcompta / Rsoignants
 DNS <- Tout le monde enfaite
 
+Pour que les machine de la DSI puissent configurer à distance les autres machines, on utilise le port TCP 22, protocole ssh
+Machine de RDSI pouvant configurer:
+	PCDSI, PCRSSI
+Machine configurables par la DSI:
+	PCs PCc PCetu PCens S DNS MAIL BDD AUX 
+	Rsoignants Rcompta Retudiants Renseignants Rchercheur Rec Rvisiteurs Rpatients RS RDSI
+	(en gros, tout sauf PCche PCec PCv et PCp)
 
 pour l'accès à internet:
 	le protocole DNS c un protocole UDP, sur le port 53
@@ -48,6 +55,8 @@ Certains réseaux utilisent les mêmes services différements (étudiants / ense
 		Rpatients / Rvisiteurs
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -58,6 +67,8 @@ FORWARD
 	--   		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
 
 
 iptables -P INPUT DROP
@@ -80,18 +91,24 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 		Retudiants / Renseignants
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
-	DNS			--				UDP	 53		ACCEPT 		ESTABLESHED, RELATED
+	DNS			--				UDP	 53		ACCEPT 		ESTABLISHED, RELATED
 	--			DNS				UDP	 53		ACCEPT
 	-- 			-- 				TCP  80,443 ACCEPT
-	MAIL		--				TCP	 4567	ACCEPT 		ESTABLESHED, RELATED
+	MAIL		--				TCP	 4567	ACCEPT 		ESTABLISHED, RELATED
 	--			MAIL			TCP	 4567	ACCEPT
 	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
+	RDSI		--				TCP  22 	ACCEPT 		
+	-- 			RDSI			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
 
 
 iptables -P INPUT DROP
@@ -118,6 +135,8 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 		Rchercheur / Rec
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -132,6 +151,8 @@ FORWARD
 	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED	
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -159,20 +180,26 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 		Rsoignants, Rcompta 
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
-	DNS			--				UDP	 53		ACCEPT 		ESTABLESHED, RELATED
+	DNS			--				UDP	 53		ACCEPT 		ESTABLISHED, RELATED
 	--			DNS				UDP	 53		ACCEPT
 	-- 			-- 				TCP  80,443 ACCEPT
-	S 			-- 				TCP  1224 	ACCEPT 		ESTABLESHED, RELATED
+	S 			-- 				TCP  1224 	ACCEPT 		ESTABLISHED, RELATED
 	-- 			S 				TCP  1224 	ACCEPT
-	MAIL		--				TCP	 4567	ACCEPT 		ESTABLESHED, RELATED
+	MAIL		--				TCP	 4567	ACCEPT 		ESTABLISHED, RELATED
 	--			MAIL			TCP  4567   ACCEPT
 	RDSI 		-- 				ICMP /		ACCEPT
-	--  		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
+	--  		RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
+	RDSI		--				TCP  22 	ACCEPT 		
+	-- 			RDSI			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLISHED, RELATED
 
 
 iptables -P INPUT DROP
@@ -200,10 +227,14 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 		RDSI
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default ACCEPT
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
@@ -220,6 +251,7 @@ INPUT
 	MAIL		TCP	 4567	ACCEPT 		ESTABLESHED, RELATED
 	RDSI  		ICMP /		ACCEPT
 	--  		ICMP /		ACCEPT 		ESTABLESHED, RELATED
+	-- 			TCP  22 	ACCEPT 		ESTABLESHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
@@ -230,6 +262,7 @@ OUTPUT
 	S 			TCP  1224 	ACCEPT
 	MAIL		TCP	 4567	ACCEPT
 	--  		ICMP /		ACCEPT
+	-- 			TCP  22 	ACCEPT
 
 
 iptables -P INPUT DROP
@@ -266,6 +299,7 @@ INPUT
 	RDSI  		ICMP /		ACCEPT
 	--  		ICMP /		ACCEPT 		ESTABLESHED, RELATED
 	BDD 		TCP  22 	ACCEPT 		ESTABLESHED, RELATED
+	-- 			TCP  22 	ACCEPT 		ESTABLESHED, RELATED
 FORWARD
 	Default DROP
 OUTPUT
@@ -277,6 +311,7 @@ OUTPUT
 	MAIL		TCP	 4567	ACCEPT
 	--	 		ICMP /		ACCEPT
 	BDD 		TCP  22 	ACCEPT
+	-- 			TCP  22 	ACCEPT
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -319,6 +354,7 @@ INPUT
 	Rcompta 	TCP  4567   ACCEPT
 	RDSI 		TCP  4567   ACCEPT
 	AUX 		TCP  2302 	ACCEPT
+	RDSI 		TCP  22 	ACCEPT
 FORWARD
 	Default DROP
 OUTPUT
@@ -332,6 +368,7 @@ OUTPUT
 	Rcompta 		TCP  4567   ACCEPT 		ESTABLISHED, RELATED
 	RDSI 			TCP  4567   ACCEPT 		ESTABLISHED, RELATED
 	AUX 			TCP  2302 	ACCEPT 		ESTABLISHED, RELATED
+	RDSI 			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -368,6 +405,7 @@ INPUT
 	RSSI 	  	TCP	 22 	ACCEPT
 	S 			TCP  3306	ACCEPT
 	AUX 		TCP  2302 	ACCEPT
+	RDSI 		TCP  22 	ACCEPT
 FORWARD
 	Default DROP
 OUTPUT
@@ -378,6 +416,7 @@ OUTPUT
 	RSSI 	  		TCP	 22 	ACCEPT 		ESTABLESHED, RELATED
 	S 				TCP  3306 	ACCEPT 		ESTABLESHED, RELATED
 	AUX 			TCP  2302 	ACCEPT 		ESTABLISHED, RELATED
+	RDSI 			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -407,6 +446,7 @@ INPUT
 	S			TCP  2302 	ACCEPT 		ESTABLESHED, RELATED
 	S			TCP  2302	ACCEPT 		ESTABLESHED, RELATED
 	DNS 		TCP  2302 	ACCEPT 		ESTABLESHED, RELATED
+	RDSI 		TCP  22 	ACCEPT
 FORWARD
 	Default DROP
 OUTPUT
@@ -417,6 +457,7 @@ OUTPUT
 	S				TPC	 2302	ACCEPT
 	S				TPC	 2302	ACCEPT
 	DNS 			TPC	 2302	ACCEPT
+	RDSI 			TCP  22 	ACCEPT 		ESTABLESHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -438,10 +479,14 @@ iptables -A OUTPUT -d 172.16.3.17 -p tcp --dport 2302 -j ACCEPT
 		RS
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default ACCEPT
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
@@ -459,6 +504,7 @@ INPUT
 	RDSI 		ICMP /		ACCEPT
 	BDD 		TCP	 3306 	ACCEPT 		ESTABLISHED, RELATED
 	AUX 		TCP  2302 	ACCEPT
+	RDSI 		TCP  22 	ACCEPT
 FORWARD
 	Default DROP
 OUTPUT
@@ -470,6 +516,7 @@ OUTPUT
 	RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
 	BDD				TCP	 3306 	ACCEPT
 	AUX 			TCP  2302 	ACCEPT 		ESTABLISHED, RELATED
+	RDSI 			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 
 
 iptables -P INPUT DROP
@@ -505,6 +552,7 @@ INPUT
 	-- 	 		UDP	 53 	ACCEPT
 	RDSI 		ICMP /		ACCEPT
 	AUX 		TCP  2302 	ACCEPT
+	RDSI 		TCP  22 	ACCEPT
 FORWARD
 	Default DROP
 OUTPUT
@@ -513,6 +561,7 @@ OUTPUT
 	-- 				UDP	 53 	ACCEPT
 	RDSI			ICMP /		ACCEPT
 	AUX				TCP  2302 	ACCEPT 		ESTABLISHED, RELATED
+	RDSI 			TCP  22 	ACCEPT 		ESTABLISHED, RELATED
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -528,15 +577,19 @@ iptables -A INPUT -s 172.16.2.4 -p tcp --dport 2302 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 
-		R0
+		Rcri / Redu / Rbas 
 INPUT
 	Default DROP
+	source 		prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
 	-- 			-- 				TCP  80,443 ACCEPT
 OUTPUT
 	Default DROP
+	destination	prot port	policy		state
+	RDSI		TCP	 22		ACCEPT 		ESTABLISHED, RELATED
 POSTROUTING
 	nat tout ça tout ça
 
