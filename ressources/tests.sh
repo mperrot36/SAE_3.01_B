@@ -1,7 +1,7 @@
 test_ping() {
 	local machine=$1
 	local target_ip=$2
-	local reverse=${3:false}
+	local reverse=${3:-false}
 	local max_ping=${4:-1}
 
 	if kathara exec $machine -- ping -c $max_ping $target_ip >/dev/null 2>&1; then
@@ -15,7 +15,7 @@ test_nc() {
 	local machine=$1
 	local target_ip=$2
 	local port=$3
-	local reverse=${4:false}
+	local reverse=${4:-false}
 	local timeout=${5:-1}
 
 	if kathara exec $machine -- nc -z -w $timeout $target_ip $port >/dev/null 2>&1; then
@@ -27,10 +27,9 @@ test_nc() {
  
 test_internet() {
 	local machine=$1
-	local reverse=${2:false}
-	local max_time=${3:2}
+	local reverse=${2:-false}
 
-	if kathara exec $machine -- nc -z 8.8.8.8 443 >/dev/null 2>&1; then
+	if kathara exec $machine -- curl -s --max-time 3 https://1.1.1.1 >/dev/null 2>&1; then
 		if $reverse; then echo "FAIL"; else echo "OK"; fi
 	else
 		if $reverse; then echo "OK"; else echo "FAIL"; fi
