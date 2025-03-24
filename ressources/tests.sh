@@ -29,7 +29,7 @@ test_internet() {
 	local machine=$1
 	local reverse=${2:false}
 
-	if $(kathara exec $machine -- apt update >/dev/null 2>&1); then
+	if kathara exec $machine -- apt update >/dev/null 2>&1; then
 		if reverse; then echo "FAIL"; else echo "OK"; fi
 	else
 		if reverse; then echo "OK"; else echo "FAIL"; fi
@@ -42,22 +42,22 @@ test_internet() {
 echo "~~TESTING PCS~~"
 
 echo "internet access:"
-test_internet("pcs")
+test_internet "pcs"
 
 echo "mail access:"
-test_nc("pcs", "172.16.2.2", "4567")
+test_nc "pcs" "172.16.2.2" "4567"
 
 echo "intranet http access:"
-test_nc("pcs", "172.16.3.28", "80")
+test_nc "pcs" "172.16.3.28" "80"
 
 echo "intranet https access:"
-test_nc("pcs", "172.16.3.28", "443")
+test_nc "pcs" "172.16.3.28" "443" 
 
 echo "S app access:"
-test_nc("pcs", "172.16.3.28", "1224")
+test_nc "pcs" "172.16.3.28" "1224"
 
 echo "ssh access to pcdsi:"
-test_nc("pcs", "172.16.2.5", "22", true)
+test_nc "pcs" "172.16.2.5" "22" true
 
 echo "ping pcdsi:"
-test_ping("pcs", "172.16.2.5", true)
+test_ping "pcs" "172.16.2.5" true
