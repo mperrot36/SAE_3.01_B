@@ -18,7 +18,7 @@ test_nc() {
 	local reverse=${4:-false}
 	local timeout=${5:-1}
 
-	local output=$(kathara exec $machine -- nc -zv -w $timeout $target_ip $port)
+	local output=$(kathara exec $machine -- nc -zv -w $timeout $target_ip $port 2>&1)
 
 	if echo "$output" | grep -q "Connection refused"; then
 		if $reverse; then echo "FAIL"; else echo "OK"; fi
