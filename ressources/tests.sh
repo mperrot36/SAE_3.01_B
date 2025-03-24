@@ -56,8 +56,46 @@ test_nc "pcs" "172.16.3.28" "443"
 echo "S app access:"
 test_nc "pcs" "172.16.3.28" "1224"
 
-echo "ssh access to pcdsi:"
+echo "can't ssh access to pcdsi:"
 test_nc "pcs" "172.16.2.5" "22" true
 
-echo "ping pcdsi:"
+echo "can't ping pcdsi:"
 test_ping "pcs" "172.16.2.5" true
+
+
+
+echo "~~TESTING PCDSI~~"
+
+echo "internet access:"
+test_internet "pcdsi"
+
+echo "mail acces:"
+test_nc "pcdsi" "172.16.2.2" "4567"
+
+echo "intranet http access:"
+test_nc "pcdsi" "172.16.3.28" "80"
+
+echo "intranet https access:"
+test_nc "pcdsi" "172.16.3.28" "443" 
+
+echo "S app access:"
+test_nc "pcdsi" "172.16.3.28" "1224"
+
+echo "can't bdd sftp access:"
+test_nc "pcdsi" "172.16.2.3" "22" true
+
+echo "ssh access to pcs:"
+test_nc "pcdsi" "172.16.20.1" "22"
+
+
+
+echo "~~TESTING S~~"
+
+echo "internet access:"
+test_internet "s"
+
+echo "bdd mysql access:"
+test_nc "s" "172.16.3" "3306"
+
+echo "can't ssh access to pcdsi"
+test_nc "s" "172.16.2.5" "22" true
