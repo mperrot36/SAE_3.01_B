@@ -168,6 +168,10 @@ machines à tester:
 			echo "test" | nc 172.16.3.28 443 -> doit fonctionner
 		accès à appli gestion sur s:
 			echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
+		accès ssh à pcdsi:
+			echo "test" | nc 172.16.2.5 22 -> doit pas fonctionner
+		ping pcdsi:
+			ping 172.16.2.5 -> doit pas fonctionner
 
 	pcdsi
 		accès internet:
@@ -182,9 +186,16 @@ machines à tester:
 			echo "test" | nc 172.16.3.28 1224 -> doit fonctionner
 		accès à bdd (en SFTP):
 			echo "test" | nc 172.16.2.3 22 -> doit pas fonctionner
+		accès ssh à pcs:
+			echo "test" | nc 172.16.20.1 22 -> doit fonctionner
+		ping pcs:
+			ping 172.16.20.1 -> doit fonctionner
+
 
 	s
 		accès internet:
 			echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
 		accès à bdd (en MySql):
 			echo "test" | nc 172.16.2.3 3306 -> doit fonctionner
+		accès ssh à pcdsi:
+			echo "test" | nc 172.16.2.5 22 -> doit pas fonctionner
