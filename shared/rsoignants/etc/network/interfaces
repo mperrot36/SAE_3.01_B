@@ -2,11 +2,11 @@ auto eth0
 iface eth0 inet static
 	address 172.16.31.245
 	netmask 255.255.255.224
-	gateway 172.16.31.225
+	gateway 172.16.31.227
 	metric 50
 
 post-up ip route add default via 172.16.31.256 fev eth0 metric 100
-post-up ip route add default via 172.16.31.257 fev eth0 metric 150
+post-up ip route add default via 172.16.31.255 fev eth0 metric 150
 
 auto eth1
 iface eth1 inet static
