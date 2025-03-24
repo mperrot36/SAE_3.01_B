@@ -5,9 +5,9 @@ test_ping() {
 	local max_ping=${4:-1}
 
 	if kathara exec $machine -- ping -c $max_ping $target_ip >/dev/null 2>&1; then
-		if reverse; then echo "FAIL"; else echo "OK"; fi
+		if $reverse; then echo "FAIL"; else echo "OK"; fi
 	else
-		if reverse; then echo "OK"; else echo "FAIL"; fi
+		if $reverse; then echo "OK"; else echo "FAIL"; fi
 	fi
 }
 
@@ -19,9 +19,9 @@ test_nc() {
 	local timeout=${5:-1}
 
 	if kathara exec $machine -- nc -z -w $timeout $target_ip $port >/dev/null 2>&1; then
-		if reverse; then echo "FAIL"; else echo "OK"; fi
+		if $reverse; then echo "FAIL"; else echo "OK"; fi
 	else
-		if reverse; then echo "OK"; else echo "FAIL"; fi
+		if $reverse; then echo "OK"; else echo "FAIL"; fi
 	fi
 }
 
@@ -30,9 +30,9 @@ test_internet() {
 	local reverse=${2:false}
 
 	if kathara exec $machine -- apt update >/dev/null 2>&1; then
-		if reverse; then echo "FAIL"; else echo "OK"; fi
+		if $reverse; then echo "FAIL"; else echo "OK"; fi
 	else
-		if reverse; then echo "OK"; else echo "FAIL"; fi
+		if $reverse; then echo "OK"; else echo "FAIL"; fi
 	fi
 }
 
