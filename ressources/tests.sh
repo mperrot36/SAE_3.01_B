@@ -1,3 +1,5 @@
+#!/bin/bash
+
 test_ping() {
 	local machine=$1
 	local target_ip=$2
@@ -42,60 +44,69 @@ test_internet() {
 n_ok=0
 n_fail=0
 
+update_result() {
+	local res=$1
+	echo $res
+	if [ "$res" == "OK" ]; then
+		((n_ok++))
+	else
+		((n_fail++))
+	fi
+}
+
 echo "~~TESTING PCS~~"
 
 echo "internet access:"
-if test_internet "pcs" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_internet "pcs")
 
 echo "mail access:"
-if test_nc "pcs" "172.16.2.2" "4567" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcs" "172.16.2.2" "4567")
 
 echo "intranet http access:"
-if test_nc "pcs" "172.16.3.28" "80" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcs" "172.16.3.28" "80")
 
 echo "intranet https access:"
-if test_nc "pcs" "172.16.3.28" "443" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcs" "172.16.3.28" "443")
 
 echo "S app access:"
-if test_nc "pcs" "172.16.3.28" "1224" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcs" "172.16.3.28" "1224")
 
 echo "can't ssh access to pcdsi:"
-if test_nc "pcs" "172.16.2.5" "22" true == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcs" "172.16.2.5" "22" true)
 
 echo "can't ping pcdsi:"
-if test_ping "pcs" "172.16.2.5" true == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_ping "pcs" "172.16.2.5" true)
 
 
 
 echo "~~TESTING PCDSI~~"
 
 echo "internet access:"
-if test_internet "pcdsi" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_internet "pcdsi")
 
 echo "mail acces:"
-if test_nc "pcdsi" "172.16.2.2" "4567" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcdsi" "172.16.2.2" "4567")
 
 echo "intranet http access:"
-if test_nc "pcdsi" "172.16.3.28" "80" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcdsi" "172.16.3.28" "80")
 
 echo "intranet https access:"
-if test_nc "pcdsi" "172.16.3.28" "443" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcdsi" "172.16.3.28" "443")
 
 echo "S app access:"
-if test_nc "pcdsi" "172.16.3.28" "1224" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcdsi" "172.16.3.28" "1224")
 
 echo "ssh access to pcs:"
-if test_nc "pcdsi" "172.16.20.1" "22" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "pcdsi" "172.16.20.1" "22")
 
 
 
 echo "~~TESTING S~~"
 
 echo "bdd mysql access:"
-if test_nc "s" "172.16.2.3" "3306" == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "s" "172.16.2.3" "3306")
 
 echo "can't ssh access to pcdsi"
-if test_nc "s" "172.16.2.5" "22" true == "OK"; then n_ok += 1; else n_fail += 1
+update_result $(test_nc "s" "172.16.2.5" "22" true)
 
-n_test = $n_ok + $n_fail
-echo "$n_test tests: $n_ok passed, $n_fail failed"
+echo "$((n_ok + $n_fail)) tests: $n_ok passed, $n_fail failed"
