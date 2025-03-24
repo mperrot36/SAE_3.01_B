@@ -29,7 +29,7 @@ test_internet() {
 	local machine=$1
 	local reverse=${2:false}
 
-	if kathara exec $machine -- apt update >/dev/null 2>&1; then
+	if $(kathara exec $machine -- apt update >/dev/null 2>&1); then
 		if reverse; then echo "FAIL"; else echo "OK"; fi
 	else
 		if reverse; then echo "OK"; else echo "FAIL"; fi
