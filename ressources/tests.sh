@@ -39,59 +39,63 @@ test_internet() {
 }
 
 
-
+n_ok=0
+n_fail=0
 
 echo "~~TESTING PCS~~"
 
 echo "internet access:"
-test_internet "pcs"
+if test_internet "pcs" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "mail access:"
-test_nc "pcs" "172.16.2.2" "4567"
+if test_nc "pcs" "172.16.2.2" "4567" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "intranet http access:"
-test_nc "pcs" "172.16.3.28" "80"
+if test_nc "pcs" "172.16.3.28" "80" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "intranet https access:"
-test_nc "pcs" "172.16.3.28" "443" 
+if test_nc "pcs" "172.16.3.28" "443" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "S app access:"
-test_nc "pcs" "172.16.3.28" "1224"
+if test_nc "pcs" "172.16.3.28" "1224" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "can't ssh access to pcdsi:"
-test_nc "pcs" "172.16.2.5" "22" true
+if test_nc "pcs" "172.16.2.5" "22" true == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "can't ping pcdsi:"
-test_ping "pcs" "172.16.2.5" true
+if test_ping "pcs" "172.16.2.5" true == "OK"; then n_ok += 1; else n_fail += 1
 
 
 
 echo "~~TESTING PCDSI~~"
 
 echo "internet access:"
-test_internet "pcdsi"
+if test_internet "pcdsi" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "mail acces:"
-test_nc "pcdsi" "172.16.2.2" "4567"
+if test_nc "pcdsi" "172.16.2.2" "4567" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "intranet http access:"
-test_nc "pcdsi" "172.16.3.28" "80"
+if test_nc "pcdsi" "172.16.3.28" "80" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "intranet https access:"
-test_nc "pcdsi" "172.16.3.28" "443" 
+if test_nc "pcdsi" "172.16.3.28" "443" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "S app access:"
-test_nc "pcdsi" "172.16.3.28" "1224"
+if test_nc "pcdsi" "172.16.3.28" "1224" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "ssh access to pcs:"
-test_nc "pcdsi" "172.16.20.1" "22"
+if test_nc "pcdsi" "172.16.20.1" "22" == "OK"; then n_ok += 1; else n_fail += 1
 
 
 
 echo "~~TESTING S~~"
 
 echo "bdd mysql access:"
-test_nc "s" "172.16.2.3" "3306"
+if test_nc "s" "172.16.2.3" "3306" == "OK"; then n_ok += 1; else n_fail += 1
 
 echo "can't ssh access to pcdsi"
-test_nc "s" "172.16.2.5" "22" true
+if test_nc "s" "172.16.2.5" "22" true == "OK"; then n_ok += 1; else n_fail += 1
+
+n_test = $n_ok + $n_fail
+echo "$n_test tests: $n_ok passed, $n_fail failed"
