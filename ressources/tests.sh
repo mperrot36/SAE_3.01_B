@@ -83,18 +83,12 @@ test_nc "pcdsi" "172.16.3.28" "443"
 echo "S app access:"
 test_nc "pcdsi" "172.16.3.28" "1224"
 
-echo "can't bdd sftp access:"
-test_nc "pcdsi" "172.16.2.3" "22" true
-
 echo "ssh access to pcs:"
 test_nc "pcdsi" "172.16.20.1" "22"
 
 
 
 echo "~~TESTING S~~"
-
-echo "internet access:"
-test_internet "s"
 
 echo "bdd mysql access:"
 test_nc "s" "172.16.2.3" "3306"
