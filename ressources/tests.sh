@@ -97,7 +97,7 @@ echo "internet access:"
 test_internet "s"
 
 echo "bdd mysql access:"
-test_nc "s" "172.16.3" "3306"
+test_nc "s" "172.16.2.3" "3306"
 
 echo "can't ssh access to pcdsi"
 test_nc "s" "172.16.2.5" "22" true
