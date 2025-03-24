@@ -191,7 +191,6 @@ machines à tester:
 		ping pcs:
 			ping 172.16.20.1 -> doit fonctionner
 
-
 	s
 		accès internet:
 			echo "8.8.8.8" > /etc/resolv.conf && apt update -> doit fonctionner
