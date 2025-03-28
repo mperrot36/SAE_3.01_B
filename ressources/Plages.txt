@@ -54,7 +54,7 @@ Plage Routeurs : 172.16.31.224/27 -> 172.16.31.254
 
 
 New routeurs:
-	Rbas 172.16.31.225:
+	Rbas 172.16.31.227:
 		Rpatients
 		Rvisiteurs
 		Rcompta
@@ -64,6 +64,6 @@ New routeurs:
 		Renseignants
 		Rchercheurs
 		Rec
-	Rcri 172.16.31.227:
+	Rcri 172.16.31.225:
 		Rs
 		Rdsi

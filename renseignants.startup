@@ -31,5 +31,5 @@ iptables -A OUTPUT -d 172.16.31.225 -p icmp -j ACCEPT
 iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.31.226 -p icmp -j ACCEPT
 
-iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -d 172.16.31.226 -p icmp -j ACCEPT
+iptables -A INPUT -s 172.16.31.227 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -d 172.16.31.227 -p icmp -j ACCEPT

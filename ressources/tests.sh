@@ -4,9 +4,9 @@ test_ping() {
 	local machine=$1
 	local target_ip=$2
 	local reverse=${3:-false}
-	local max_ping=${4:-1}
+	local timeout=${4:-1}
 
-	if kathara exec $machine -- ping -c $max_ping $target_ip >/dev/null 2>&1; then
+	if kathara exec $machine -- ping -w $timeout $target_ip >/dev/null 2>&1; then
 		if $reverse; then echo "FAIL"; else echo "OK"; fi
 	else
 		if $reverse; then echo "OK"; else echo "FAIL"; fi
@@ -108,5 +108,37 @@ update_result $(test_nc "s" "172.16.2.3" "3306")
 
 echo "can't ssh access to pcdsi"
 update_result $(test_nc "s" "172.16.2.5" "22" true)
+
+
+
+echo "~~TESTING RBAS~~"
+
+echo "can't ping rcompta:"
+update_result $(test_ping "rbas" "172.16.31.246" true)
+
+
+echo "~~TESTING REDU~~"
+
+echo "can't ping rcompta:"
+update_result $(test_ping "redu" "172.16.31.246" true)
+
+
+echo "~~TESTING RCRI~~"
+
+echo "can't ping rcompta:"
+update_result $(test_ping "rcri" "172.16.31.246" true)
+
+
+echo "~~TESTING RCOMPTA~~"
+
+echo "ping rbas"
+update_result $(test_ping "rcompta" "172.16.31.227")
+
+echo "ping redu"
+update_result $(test_ping "rcompta" "172.16.31.226")
+
+echo "ping rcri"
+update_result $(test_ping "rcompta" "172.16.31.225")
+
 
 echo "$((n_ok + $n_fail)) tests: $n_ok passed, $n_fail failed"
