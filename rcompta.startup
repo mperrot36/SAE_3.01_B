@@ -1,6 +1,10 @@
 rsync -av /shared/rcompta/ /
 /etc/init.d/networking restart
 
+
+ip route add default via 172.16.31.227 dev eth0
+
+
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
@@ -36,3 +40,5 @@ iptables -A OUTPUT -d 172.16.31.226 -p icmp -j ACCEPT
 
 iptables -A INPUT -s 172.16.31.227 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -A OUTPUT -d 172.16.31.227 -p icmp -j ACCEPT
+
+nohup /shared/auto_route.sh "BAS" &
