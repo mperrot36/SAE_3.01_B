@@ -52,23 +52,29 @@ AUX à accès à tous les services sur le port tcp 2302, comme pour MAIL, c'est 
 
 Certains réseaux utilisent les mêmes services différements (étudiants / enseignants sur l'intra), pas différenciable sur iptables mais du coup on fait sur les services en eux même (donc hors du cadre de la SAE)
 
+Afin de vérifier si un routeur internet est down ou non, les routeurs des sous réseaux doivent pouvoir les pings. 
+
+(R0 = RCRI/REDU/RBAS)
+
 		Rpatients / Rvisiteurs
 INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
-	DNS			--				UDP	 53		ACCEPT 		ESTABLESHED, RELATED
+	DNS			--				UDP	 53		ACCEPT 		ESTABLISHED, RELATED
 	--			DNS				UDP	 53		ACCEPT
 	-- 			-- 				TCP  80,443 ACCEPT
 	RDSI 		-- 				ICMP /		ACCEPT		
-	--   		RDSI			ICMP /		ACCEPT 		ESTABLESHED, RELATED
+	--   		RDSI			ICMP /		ACCEPT 		ESTABLISHED, RELATED
 OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 
 iptables -P INPUT DROP
@@ -89,11 +95,25 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+
+
 		Retudiants / Renseignants
 INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -110,6 +130,7 @@ OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 
 iptables -P INPUT DROP
@@ -136,6 +157,17 @@ iptables -A FORWARD -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLIS
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
 
 
 		Rchercheur / Rec
@@ -143,6 +175,7 @@ INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -159,6 +192,7 @@ OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 iptables -P INPUT DROP
 iptables -P FORWARD DROP
@@ -184,12 +218,25 @@ iptables -A FORWARD -d 172.16.2.0/24 -p icmp -m state --state ESTABLISHED,RELATE
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+
 
 		Rsoignants, Rcompta 
 INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -208,6 +255,7 @@ OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLISHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 
 iptables -P INPUT DROP
@@ -237,18 +285,33 @@ iptables -A FORWARD -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLIS
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+
+
 
 		RDSI
 INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default ACCEPT
 OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
@@ -256,6 +319,18 @@ iptables -P OUTPUT DROP
 
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
 
 
 		PCDSI
@@ -507,12 +582,14 @@ INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	R0 		 	ICMP / 		ACCEPT 		ESTABLISHED, RELATED 
 FORWARD
 	Default ACCEPT
 OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLESHED, RELATED
+	R0 			ICMP / 		ACCEPT
 
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
@@ -520,6 +597,18 @@ iptables -P OUTPUT DROP
 
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+--
+
+iptables -A INPUT -s 172.16.31.225 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.225 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.226 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -s 172.16.31.226 -p icmp -j ACCEPT
+
 
 		S
 INPUT
@@ -607,11 +696,14 @@ iptables -A OUTPUT -d 172.16.2.4 -p tcp --sport 2302 -m state --state ESTABLISHE
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
 
+
+
 		Rcri / Redu / Rbas 
 INPUT
 	Default DROP
 	source 		prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		--
+	Routeur		icmp / 		ACCEPT 		--
 FORWARD
 	Default DROP
 	source 		destination		prot port	policy		state
@@ -620,6 +712,7 @@ OUTPUT
 	Default DROP
 	destination	prot port	policy		state
 	RDSI		TCP	 22		ACCEPT 		ESTABLISHED, RELATED
+	Routeur		icmp / 		ACCEPT 		ESTABLISHED, RELATED
 POSTROUTING
 	nat tout ça tout ça
 
@@ -636,6 +729,9 @@ iptables -t nat -A POSTROUTING -o eth1 -j MASQUERADE
 
 iptables -A INPUT -s 172.16.2.0/24 -p tcp --dport 22 -j ACCEPT
 iptables -A OUTPUT -d 172.16.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+iptables -A INPUT -s 172.16.31.224/27 -p icmp -j ACCEPT
+iptables -A OUTPUT -d 172.16.31.224/27 -p icmp -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 jsp comment le mettre dans le tableau mais faut mettre le masquarade pour proteger d'internet
 eth1 est l'interface connecté à internet

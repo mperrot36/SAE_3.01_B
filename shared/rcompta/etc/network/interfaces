@@ -5,8 +5,8 @@ iface eth0 inet static
 	gateway 172.16.31.227
 	metric 50
 
-post-up ip route add default via 172.16.31.256 fev eth0 metric 100
-post-up ip route add default via 172.16.31.255 fev eth0 metric 150
+post-up ip route add default via 172.16.31.226 dev eth0 metric 100
+post-up ip route add default via 172.16.31.225 dev eth0 metric 150
 
 auto eth1
 iface eth1 inet static
