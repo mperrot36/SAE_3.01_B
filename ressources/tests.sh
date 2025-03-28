@@ -40,6 +40,33 @@ test_internet() {
 	fi
 }
 
+test_dns() {
+    local machine=$1
+    local reverse=${2:-false}
+    local timeout=${3:-1}
+
+    local output=$(kathara exec $machine -- nc -zvu -w $timeout 172.16.3.17 53 2>&1)
+
+    if echo "$output" | grep -q "succeeded!"; then
+        if $reverse; then echo "FAIL"; else echo "OK"; fi
+    else
+        if $reverse; then echo "OK"; else echo "FAIL"; fi
+    fi
+}
+
+test_aux() {
+    local target_ip=$1
+    local reverse=${2:-false}
+    local timeout=${3:-1}
+
+    local output=$(kathara exec aux -- nc -zv -w $timeout $target_ip 2302 2>&1)
+
+    if echo "$output" | grep -q "Connection refused"; then
+        if $reverse; then echo "FAIL"; else echo "OK"; fi
+    else
+        if $reverse; then echo "OK"; else echo "FAIL"; fi
+    fi
+}
 
 n_ok=0
 n_fail=0
@@ -58,6 +85,9 @@ echo "~~TESTING PCS~~"
 
 echo "internet access:"
 update_result $(test_internet "pcs")
+
+echo "dns access:"
+update_result $(test_dns "pcs")
 
 echo "mail access:"
 update_result $(test_nc "pcs" "172.16.2.2" "4567")
@@ -109,7 +139,8 @@ update_result $(test_nc "s" "172.16.2.3" "3306")
 echo "can't ssh access to pcdsi"
 update_result $(test_nc "s" "172.16.2.5" "22" true)
 
-
+echo "aux access:"
+update_result $(test_aux "172.16.3.28")
 
 echo "~~TESTING RBAS~~"
 

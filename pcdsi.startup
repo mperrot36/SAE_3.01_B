@@ -5,8 +5,8 @@ iptables -P INPUT DROP
 iptables -P FORWARD DROP
 iptables -P OUTPUT DROP
 
-iptables -A INPUT -p udp --sport 53 -m state --state ESTABLISHED,RELATED -j ACCEPT
-iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+iptables -A INPUT -p udp --sport 53 -s 172.16.3.17 -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -d 172.16.3.17 -j ACCEPT
 
 iptables -A INPUT -p tcp --sport 80 -j ACCEPT
 iptables -A INPUT -p tcp --sport 443 -j ACCEPT
