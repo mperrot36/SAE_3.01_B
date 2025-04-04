@@ -59,7 +59,7 @@ while true; do
 
         new_gateway=$routeur1
 
-    else then 
+    elif [ "$ping_r1" == "1" ]; then 
 
         if [ "$ping_r2" == "0" ]; then
 
@@ -68,6 +68,10 @@ while true; do
         elif [ "$ping_r3" == "0" ]; then
 
             new_gateway=$routeur3
+
+        else
+
+            echo "there's nothing we can do..."
 
         fi
     fi
